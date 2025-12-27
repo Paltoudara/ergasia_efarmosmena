@@ -3,7 +3,12 @@
 int main() {
 	//elegxos
 	solution obj{};
-	double a{ 0.0 }, b{ 1.0 }, h{ 0.1 }, n{2};
+	double a{ 0.0 }, b{ 1.0 }, h{}, n{2};
+	std::cout << "give h: ";
+	std::cin >> h;
+	if (h < 0.0&&std::abs(h-0.0)<1E-8) {//h>0 now
+		return 0;
+	}
 	std::vector<std::vector<double>>matrix{};
 	std::vector<std::function<double(double)>>functions{};
 	functions.push_back([](double x)->double{return 2.0 * x*x - 2.0 * x - 2.0; });
@@ -30,8 +35,14 @@ int main() {
 		return 0;
 	}
 	for (std::size_t i = 0; i < sol.size(); i++) {
-		std::cout << sol[i] << '\n';
+		std::cout <<"c"<<i+1<<": " << sol[i] << '\n';
 	}
 	std::cout << '\n';
-	obj.error(sol,a,b,h);
+	std::size_t N{ static_cast<std::size_t>((b - a) / h) };
+	std::vector<double>xi{};
+	for (std::size_t i = 0; i <= N; i++) {
+		xi.push_back(a + i * h);
+	}
+	std::cout << '\n';
+	obj.error(sol,a,b,h,xi);
 }
