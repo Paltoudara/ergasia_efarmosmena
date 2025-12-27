@@ -1,4 +1,4 @@
-//more generic
+//more generic code next time
 #pragma once
 #include<iostream>
 #include<cmath>
@@ -103,7 +103,8 @@ public:
             }
            /* sum += sol[0] * fi1(a + i * h);
             sum += sol[1] * fi2(a + i * h);*/
-            std::cout << std::abs(sum - u_exact(a + i*h))<<'\n';
+            std::cout << "un: " << sum << " u_exact:" << u_exact(a + i * h) << " error: " << std::abs(sum - u_exact(a + i * h)) << '\n';
+            //std::cout << std::abs(sum - u_exact(a + i*h))<<'\n';
         }
        
     }
