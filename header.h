@@ -1,4 +1,3 @@
-//more generic code next time
 #pragma once
 #include<iostream>
 #include<cmath>
@@ -90,8 +89,9 @@ public:
         }
         return  x; // Return the solution vector x
     }
-    void error(const  std::vector<double>&sol,const double a,const double b,const double h) {
+    void error(const  std::vector<double>&sol,const double a,const double b,const double h,const std::vector<double>&xi) {
         //return un
+        double max{-INFINITY};
         std::vector<std::function<double(double)>>fi{ };
         fi.push_back([&](double x)->double {return fi1(x); });
         fi.push_back([&](double x)->double {return fi2(x); });
@@ -99,14 +99,14 @@ public:
         for (std::size_t i = 0; i <= n; i++) {
             double sum{ 0.0 };
             for (std::size_t j = 0; j < 2; j++) {
-                sum += sol[j] * fi[j](a + i * h);
+                sum += sol[j] * fi[j](xi[i]);
             }
-           /* sum += sol[0] * fi1(a + i * h);
-            sum += sol[1] * fi2(a + i * h);*/
-            std::cout << "un: " << sum << " u_exact:" << u_exact(a + i * h) << " error: " << std::abs(sum - u_exact(a + i * h)) << '\n';
-            //std::cout << std::abs(sum - u_exact(a + i*h))<<'\n';
+            if (std::abs(sum - u_exact(xi[i])) > max) {
+                max = std::abs(sum - u_exact(xi[i]));
+            }
+            std::cout << "un: " << sum << "   u_exact:" << u_exact(xi[i]) << "   error: " << std::abs(sum - u_exact(xi[i])) << '\n';
         }
-       
+        std::cout << "max error: " << max << '\n';
     }
 
 };
